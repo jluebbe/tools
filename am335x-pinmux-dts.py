@@ -4,7 +4,11 @@
 
 import re
 
-from exceptions import Exception
+try:
+  from exceptions import Exception
+except ImportError:
+  # Python3
+  pass
 
 offset = re.compile(r"(CONTROL_PADCONF_.*?)\s+(0x\w+)")
 offsets = {}
@@ -44,4 +48,4 @@ for line in open('pinmux.h').readlines():
       comment += ' | ' + m.group(4)
     else:
       raise Exception("bad field 4: %s" % m.group(4))
-    print 4*'\t' + '0x%03x 0x%02x' % (off, reg) + '\t' + '/* %s */' % comment
+    print(4*'\t' + '0x%03x 0x%02x' % (off, reg) + '\t' + '/* %s */' % comment)
